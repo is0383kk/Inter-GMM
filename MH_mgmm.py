@@ -12,23 +12,22 @@ parser.add_argument('--mode', type=int, default=-1, metavar='M', help='0:All rej
 parser.add_argument('--iteration', type=int, default=100, metavar='N', help='number of iteration for MGMM_MH')
 args = parser.parse_args()
 
-# 保存用のディレクトリの作成
 file_name = "debug"; model_dir = "./model"; dir_name = "./model/"+file_name# debugフォルダに保存される
 if not os.path.exists(model_dir):   os.mkdir(model_dir)
 if not os.path.exists(dir_name):    os.mkdir(dir_name)
 
-K = args.sign # サイン総数
+K = args.sign # number of category
 
-# データセットの読み込み
-c_nd_A = np.load("./dataset/data1d_1.npy") # Aの観測
-c_nd_B = np.load("./dataset/data1d_2.npy") # Bの観測
-z_truth_n = np.load("./dataset/true_label1d.npy") # 真のサインラベル
+# load dataset
+c_nd_A = np.load("./dataset/data1d_1.npy") # observation A
+c_nd_B = np.load("./dataset/data1d_2.npy") # observation B
+z_truth_n = np.load("./dataset/true_label1d.npy") # true label
 
-D = len(c_nd_A) # データ総数
-dim = len(c_nd_A[0]) # データの次元数
+D = len(c_nd_A) # number of data
+dim = len(c_nd_A[0]) # dimention of data
 
 ############################## Initializing parameters ##############################
-# ハイパーパラメータ
+# hyper parameter
 beta = 1.0; m_d_A = np.repeat(0.0, dim)
 m_d_B = np.repeat(0.0, dim)
 w_dd_A = np.identity(dim) * 0.1
